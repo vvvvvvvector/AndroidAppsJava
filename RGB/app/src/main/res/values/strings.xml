@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RGB</string>
+    <string name="rgb">wyswietl schemat barw RGB</string>
+    <string name="cmyk">wyswietl schemat barw CMYK</string>
+</resources>
