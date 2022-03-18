@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CityInfo">
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -20,23 +20,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ListView
-            android:id="@+id/ListViewID"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="610dp" />
-
-        <Button
-            android:id="@+id/AddButtonId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="randomize"
-            android:text="Randomize" />
-
-        <Button
-            android:id="@+id/RandNextId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Randomize next n numbers"
-            android:onClick="randomizeNext"/>
+            android:layout_height="40sp"
+            android:text="" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

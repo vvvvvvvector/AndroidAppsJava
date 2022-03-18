@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -23,20 +23,6 @@
         <ListView
             android:id="@+id/ListViewID"
             android:layout_width="match_parent"
-            android:layout_height="610dp" />
-
-        <Button
-            android:id="@+id/AddButtonId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="randomize"
-            android:text="Randomize" />
-
-        <Button
-            android:id="@+id/RandNextId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Randomize next n numbers"
-            android:onClick="randomizeNext"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

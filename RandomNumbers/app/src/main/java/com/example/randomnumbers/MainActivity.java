@@ -88,4 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
     }
+
+    public void randomizeNext(View view) {
+        Random rn = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            numbers.add(rn.nextInt(1_000_001));
+        }
+
+        adapter.notifyDataSetChanged();
+    }
 }
