@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Cities info list</string>
+    <string name="warsaw_info">
+        Miasto: Warszawa\nWojewództwo: mazowieckie\nPowierzchnia: 517km2\nliczba ludności: 1 794 166
+    </string>
+    <string name="krakow_info">
+        Miasto: Kraków\nWojewództwo: małopolskie\nPowierzchnia: 326km2\nliczba ludności: 780 796
+    </string>
+    <string name="lodz_info">
+        Miasto: Łódź\nWojewództwo: łódzkie\nPowierzchnia: 293,25km2\nliczba ludności: 667 923
+    </string>
+    <string name="wroclaw_info">
+        Miasto: Wrocław\nWojewództwo: dolnośląskie\nPowierzchnia: 292,82km2\nliczba ludności: 641 928
+    </string>
+    <string name="poznan_info">
+        Miasto: Poznań\nWojewództwo: wielkopolskie\nPowierzchnia: 261,91km2\nliczba ludności: 532 048
+    </string>
+    <string name="szczecin_info">
+        Miasto: Szczecin\nWojewództwo: zachodniopomorskie\nPowierzchnia: 300,55km2\nliczba ludności: 396 472
+    </string>
+    <string name="lublin_info">
+        Miasto: Lublin\nWojewództwo: lubelskie\nPowierzchnia: 147,45km2\nliczba ludności: 337 788
+    </string>
 </resources>

@@ -13,10 +13,10 @@ public class MainActivity extends AppCompatActivity {
     public final static String key = "key";
 
     private final String[] cities = {
-            "Warsaw",
+            "Warszawa",
             "Kraków",
             "Łódź",
-            "Wroclaw",
+            "Wrocław",
             "Poznań",
             "Szczecin",
             "Lublin"

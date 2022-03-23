@@ -16,6 +16,31 @@ public class CityInfo extends AppCompatActivity {
         Intent intent = getIntent();
 
         TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(intent.getStringExtra(MainActivity.key));
+
+        String city = intent.getStringExtra(MainActivity.key);
+
+        switch (city) {
+            case "Warszawa":
+                textView.setText(R.string.warsaw_info);
+                break;
+            case "Kraków":
+                textView.setText(R.string.krakow_info);
+                break;
+            case "Łódź":
+                textView.setText(R.string.lodz_info);
+                break;
+            case "Wrocław":
+                textView.setText(R.string.wroclaw_info);
+                break;
+            case "Poznań":
+                textView.setText(R.string.poznan_info);
+                break;
+            case "Szczecin":
+                textView.setText(R.string.szczecin_info);
+                break;
+            case "Lublin":
+                textView.setText(R.string.lublin_info);
+                break;
+        }
     }
 }
