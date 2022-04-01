@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment implements View.OnClickListener {
     private EditText editText;
     private Button button;
     OnMessageReadListener onMessageReadListener;
@@ -31,6 +31,8 @@ public class MessageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
         editText = view.findViewById(R.id.text_message);
+        editText.setOnClickListener(this);
+
         button = view.findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +44,11 @@ public class MessageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        editText.getText().clear();
     }
 
     @Override
