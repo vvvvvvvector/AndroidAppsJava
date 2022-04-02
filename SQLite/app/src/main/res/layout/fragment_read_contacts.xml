@@ -9,8 +9,7 @@
         android:id="@+id/display_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:text=""
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 </ScrollView>

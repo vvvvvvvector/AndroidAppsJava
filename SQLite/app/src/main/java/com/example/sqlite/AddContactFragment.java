@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddContactFragment extends Fragment {
 
@@ -40,7 +41,15 @@ public class AddContactFragment extends Fragment {
                 ContactDatabaseHelper contactDatabaseHelper = new ContactDatabaseHelper(getActivity());
                 SQLiteDatabase database = contactDatabaseHelper.getWritableDatabase();
 
-                // 41
+                int int_id = Integer.parseInt(id);
+                contactDatabaseHelper.addContact(int_id, name, email, database);
+                contactDatabaseHelper.close();
+
+                id_editText.setText("");
+                name_editText.setText("");
+                email_editText.setText("");
+
+                Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
             }
         });
 
