@@ -14,7 +14,7 @@ import android.widget.Button;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private Button addButton, seeButton, delButton;
+    private Button addButton, seeButton;
     OnDatabaseOperationListener onDatabaseOperationListener;
 
     public HomeFragment() {
