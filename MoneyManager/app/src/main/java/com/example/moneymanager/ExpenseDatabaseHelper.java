@@ -36,6 +36,12 @@ public class ExpenseDatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public void deleteExpense(String title, SQLiteDatabase database) {
+        database.delete(ExpenseContract.ExpenseEntry.TABLE_NAME
+                , "expense_title=?"
+                , new String[]{title});
+    }
+
     public void addExpense(String title, double amount, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
 

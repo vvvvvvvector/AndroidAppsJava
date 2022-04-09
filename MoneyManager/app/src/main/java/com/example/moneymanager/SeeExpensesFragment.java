@@ -1,6 +1,7 @@
 package com.example.moneymanager;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class SeeExpensesFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
+    ArrayList<String> records = new ArrayList<>();
 
     public SeeExpensesFragment() {
         // Required empty public constructor
@@ -33,6 +35,39 @@ public class SeeExpensesFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list_view);
         readExpenses();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int index, long l) {
+                AlertDialog.Builder communicate = new AlertDialog.Builder(getActivity());
+                communicate.setMessage("Do you want to delete this expense?");
+
+                communicate.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do nothing
+                    }
+                });
+
+                communicate.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ExpenseDatabaseHelper helper = new ExpenseDatabaseHelper(getActivity());
+                        SQLiteDatabase database = helper.getWritableDatabase();
+
+                        helper.deleteExpense(records.get(index).substring(7, records.get(index).indexOf('\n'))
+                                , database);
+                        helper.close();
+
+                        records.remove(index);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                AlertDialog alertDialog = communicate.create();
+                alertDialog.show();
+            }
+        });
+
         return view;
     }
 
@@ -41,7 +76,6 @@ public class SeeExpensesFragment extends Fragment {
         SQLiteDatabase database = helper.getWritableDatabase();
 
         Cursor cursor = helper.readExpenses(database);
-        ArrayList<String> records = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             String title = cursor.getString(

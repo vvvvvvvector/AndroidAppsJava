@@ -2,6 +2,7 @@ package com.example.moneymanager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +14,7 @@ import android.widget.Button;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private Button addButton, seeButton;
+    private Button addButton, seeButton, delButton;
     OnDatabaseOperationListener onDatabaseOperationListener;
 
     public HomeFragment() {
@@ -57,8 +58,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         try {
             onDatabaseOperationListener = (OnDatabaseOperationListener) activity;
-        } catch (ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " you must implement interface!");
         }
     }
