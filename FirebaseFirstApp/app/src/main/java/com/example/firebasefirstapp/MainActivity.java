@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 if (user_text.isEmpty()) {
                     Toast.makeText(MainActivity.this, "empty text field!", Toast.LENGTH_SHORT).show();
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("Android 2022").push().child("Text").setValue(user_text);
-                    Toast.makeText(MainActivity.this, "successfully added!", Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference().child("DatabaseData").child("nazwa").setValue(user_text);
+                    Toast.makeText(MainActivity.this, list.size(), Toast.LENGTH_SHORT).show();
                     userText.setText("");
                 }
             }
