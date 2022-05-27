@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseFirestore.getInstance().collection("cities")
+        FirebaseFirestore.getInstance()
+                .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/cities")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -120,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
                         adapter.notifyDataSetChanged();
 
-                        FirebaseFirestore.getInstance().collection("cities")
+                        FirebaseFirestore.getInstance()
+                                .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/cities")
                                 .document(city_name).set(city);
 
                         Toast.makeText(MainActivity.this, "City was successfully added!", Toast.LENGTH_SHORT).show();
