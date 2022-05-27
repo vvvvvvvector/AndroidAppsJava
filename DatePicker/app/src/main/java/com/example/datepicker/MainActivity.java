@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month++;
                 String date = getMonthFormat(month) + " " + day + " " + year;
                 dateSpinner.setText(date);
             }
