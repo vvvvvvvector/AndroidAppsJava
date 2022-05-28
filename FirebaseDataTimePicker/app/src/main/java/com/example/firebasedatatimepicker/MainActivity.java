@@ -1,5 +1,6 @@
 package com.example.firebasedatatimepicker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -18,11 +19,17 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private Button addNoteToDatabase;
@@ -36,35 +43,49 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private final ArrayList<String> list = new ArrayList<>();
 
-    int hour, minute;
+    private final ArrayList<Note> notes = new ArrayList<>();
+
+    private int hour, minute;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FirebaseFirestore.getInstance()
-//                .collection("cities")
-//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot doc : task.getResult()) {
-//                                Map<String, Object> city = doc.getData();
-//
-//                                Boolean capital = (Boolean) city.get("capital");
-//                                String country = (String) city.get("country");
-//                                String name = (String) city.get("name");
-//                                Long population = (Long) city.get("population");
-//
-//                                cities.add(new City(capital, country, name, population));
-//                                list.add(name);
-//
-//                                adapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//                });
+        FirebaseFirestore
+                .getInstance()
+                .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/notes")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                Map<String, Object> note = doc.getData();
+
+                                String date = (String) note.get("date");
+                                Long hour = (Long) note.get("hour");
+                                Long minute = (Long) note.get("minute");
+                                String text = (String) note.get("text");
+
+                                notes.add(new Note(text, hour, minute, date));
+
+                                String str = "text: " + text + "\ntime: " + hour + ":";
+
+                                if (minute < 10)
+                                    str += "0" + minute + "\n";
+                                else
+                                    str += minute + "\n";
+
+                                str += "date: " + date;
+
+                                list.add(str);
+
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
 
         addNoteToDatabase = findViewById(R.id.add_button_id);
         listView = findViewById(R.id.list_view_id);
@@ -126,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                String date = getMonthFormat(month) + " " + day + " " + year;
+                                date = getMonthFormat(month) + " " + day + " " + year;
                                 date_picker.setText(date);
                             }
                         };
@@ -144,6 +165,41 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
+
+                add_note.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String text = note_text.getText().toString();
+                        Long selected_hour = Long.valueOf(hour);
+                        Long selected_minute = Long.valueOf(minute);
+                        String selected_date = date;
+
+                        Note note = new Note(text, selected_hour, selected_minute, selected_date);
+
+                        notes.add(note);
+
+                        String str = "text: " + text + "\ntime: " + selected_hour + ":";
+
+                        if (selected_minute < 10)
+                            str += "0" + selected_minute + "\n";
+                        else
+                            str += selected_minute + "\n";
+
+                        str += "date: " + selected_date;
+
+                        list.add(str);
+
+                        adapter.notifyDataSetChanged();
+
+                        FirebaseFirestore.getInstance()
+                                .collection("users/"
+                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                        + "/notes").document().set(note);
+
+                        Toast.makeText(MainActivity.this, "Note was successfully added!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     }
