@@ -9,8 +9,10 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private final ArrayList<String> list = new ArrayList<>();
 
     private final ArrayList<Note> notes = new ArrayList<>();
+    private final ArrayList<String> ids = new ArrayList<>();
 
     private int hour, minute;
     private String date;
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                                 String text = (String) note.get("text");
 
                                 notes.add(new Note(text, hour, minute, date));
+                                ids.add(doc.getId());
 
                                 String str = "text: " + text + "\ntime: " + hour + ":";
 
@@ -176,6 +181,13 @@ public class MainActivity extends AppCompatActivity {
 
                         Note note = new Note(text, selected_hour, selected_minute, selected_date);
 
+                        DocumentReference ref = FirebaseFirestore.getInstance()
+                                .collection("users/"
+                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                        + "/notes").document();
+
+                        ids.add(ref.getId());
+                        ref.set(note);
                         notes.add(note);
 
                         String str = "text: " + text + "\ntime: " + selected_hour + ":";
@@ -191,15 +203,57 @@ public class MainActivity extends AppCompatActivity {
 
                         adapter.notifyDataSetChanged();
 
-                        FirebaseFirestore.getInstance()
-                                .collection("users/"
-                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
-                                        + "/notes").document().set(note);
-
                         Toast.makeText(MainActivity.this, "Note was successfully added!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                final Dialog dialog = new Dialog(MainActivity.this);
+
+                dialog.setContentView(R.layout.delete_button);
+
+                Log.d("doc", Integer.toString(notes.size()));
+
+                int width = WindowManager.LayoutParams.MATCH_PARENT;
+                int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialog.getWindow().setLayout(width, height);
+
+                Button delete_button = dialog.findViewById(R.id.delete_button);
+
+                delete_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        list.remove(index);
+
+                        FirebaseFirestore.getInstance()
+                                .collection("users/"
+                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                        + "/notes")
+                                .document(ids.get(index))
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(MainActivity.this, "Note was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(MainActivity.this, "Note was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                        adapter.notifyDataSetChanged();
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }
