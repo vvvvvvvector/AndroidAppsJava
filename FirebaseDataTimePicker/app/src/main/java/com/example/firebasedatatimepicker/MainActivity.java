@@ -9,7 +9,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -215,21 +214,18 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
                 final Dialog dialog = new Dialog(MainActivity.this);
 
-                dialog.setContentView(R.layout.delete_button);
-
-                Log.d("doc", Integer.toString(notes.size()));
+                dialog.setContentView(R.layout.delete_update_dialog);
 
                 int width = WindowManager.LayoutParams.MATCH_PARENT;
                 int height = WindowManager.LayoutParams.WRAP_CONTENT;
                 dialog.getWindow().setLayout(width, height);
 
                 Button delete_button = dialog.findViewById(R.id.delete_button);
+                Button update_button = dialog.findViewById(R.id.update_button);
 
                 delete_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        list.remove(index);
-
                         FirebaseFirestore.getInstance()
                                 .collection("users/"
                                         + FirebaseAuth.getInstance().getCurrentUser().getUid()
@@ -242,14 +238,82 @@ public class MainActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(MainActivity.this, "Note was successfully deleted!", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(MainActivity.this, "Note was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivity.this, "Note wasn't deleted!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
 
+                        list.remove(index);
+                        notes.remove(index);
+                        ids.remove(index);
+
                         adapter.notifyDataSetChanged();
 
                         dialog.dismiss();
+                    }
+                });
+
+                update_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog update_text_dialog = new Dialog(MainActivity.this);
+
+                        update_text_dialog.setContentView(R.layout.update_text_dialog);
+
+                        int width = WindowManager.LayoutParams.MATCH_PARENT;
+                        int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                        update_text_dialog.getWindow().setLayout(width, height);
+
+                        EditText edit_text = update_text_dialog.findViewById(R.id.edit_text_note_text);
+                        Button update = update_text_dialog.findViewById(R.id.update_text_note_text);
+
+                        edit_text.setText(notes.get(index).getText());
+
+                        update.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                notes.get(index).setText(edit_text.getText().toString());
+
+                                String str = "text: " + edit_text.getText().toString() + "\ntime: " + notes.get(index).getHour() + ":";
+
+                                if (notes.get(index).getMinute() < 10)
+                                    str += "0" + notes.get(index).getMinute() + "\n";
+                                else
+                                    str += notes.get(index).getMinute() + "\n";
+
+                                str += "date: " + notes.get(index).getDate();
+
+                                Note updated_note = new Note(edit_text.getText().toString(), notes.get(index).getHour(), notes.get(index).getMinute(), notes.get(index).getDate());
+
+                                notes.set(index, updated_note);
+                                list.set(index, str);
+
+                                adapter.notifyDataSetChanged();
+
+                                FirebaseFirestore
+                                        .getInstance()
+                                        .collection("users/"
+                                                + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                                + "/notes")
+                                        .document(ids.get(index))
+                                        .set(updated_note)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(MainActivity.this, "Note text was successfully updated!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(MainActivity.this, "Note text wasn't updated!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+
+                                update_text_dialog.dismiss();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        update_text_dialog.show();
                     }
                 });
 
