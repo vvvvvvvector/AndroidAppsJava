@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Project</string>
+    <string name="home_fragment_title">WELCOME BACK!</string>
+    <string name="user_email">Your email</string>
+    <string name="user_password">Your password</string>
+    <string name="sign_in_button_text">Sign in to Your account</string>
+    <string name="no_signed_up_acc">Don\'t have an account?</string>
+    <string name="sign_up_for_free"><u>Sign up for free</u></string>
+</resources>
