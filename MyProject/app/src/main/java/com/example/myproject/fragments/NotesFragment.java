@@ -43,6 +43,9 @@ public class NotesFragment extends Fragment {
         Note note_9 = new Note("title 9", "text 9");
         Note note_10 = new Note("title 10", "text 10");
         Note note_11 = new Note("title 11", "text 11");
+        Note note_12 = new Note("title 12", "text 12");
+        Note note_13 = new Note("title 13", "text 13");
+        Note note_14 = new Note("title 14", "text 14");
 
         ArrayList<Note> notes = new ArrayList<>();
         notes.add(note_1);
@@ -56,6 +59,9 @@ public class NotesFragment extends Fragment {
         notes.add(note_9);
         notes.add(note_10);
         notes.add(note_11);
+        notes.add(note_12);
+        notes.add(note_13);
+        notes.add(note_14);
 
         notesNumber.setText(notes.size() + " notes");
 
