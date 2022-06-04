@@ -13,4 +13,8 @@
     <string name="your_notes_text">Your notes</string>
     <string name="menu_icon">menu icon</string>
     <string name="create_new_note_temp">Create new note</string>
+    <string name="new_note_icon">new note icon</string>
+    <string name="n_notes_temp">n notes</string>
+    <string name="note_title">note_title</string>
+    <string name="note_text">note_text</string>
 </resources>

@@ -43,20 +43,41 @@
     <ListView
         android:id="@+id/notes_list"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        app:layout_constraintBottom_toTopOf="@id/create_new_note"
+        android:layout_height="630dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_notes" />
 
-    <Button
-        android:id="@+id/create_new_note"
+    <LinearLayout
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/create_new_note_temp"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notes_list"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:id="@+id/notes_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".100"
+            android:gravity="center_vertical"
+            android:text="@string/n_notes_temp"
+            android:textAlignment="gravity"
+            android:textColor="#636363"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/new_note_icon"
+            android:src="@drawable/ic_new_note" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
