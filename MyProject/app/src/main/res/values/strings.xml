@@ -6,4 +6,8 @@
     <string name="sign_in_button_text">Sign in to Your account</string>
     <string name="no_signed_up_acc">Don\'t have an account?</string>
     <string name="sign_up_for_free"><u>Sign up for free</u></string>
+    <string name="sign_up_email">Enter your email:</string>
+    <string name="sign_up_password">Enter password:</string>
+    <string name="sign_up_confirm_password">Confirm password:</string>
+    <string name="sign_up_button">Sign up</string>
 </resources>
