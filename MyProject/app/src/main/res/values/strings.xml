@@ -10,4 +10,7 @@
     <string name="sign_up_password">Enter password:</string>
     <string name="sign_up_confirm_password">Confirm password:</string>
     <string name="sign_up_button">Sign up</string>
+    <string name="your_notes_text">Your notes</string>
+    <string name="menu_icon">menu icon</string>
+    <string name="create_new_note_temp">Create new note</string>
 </resources>

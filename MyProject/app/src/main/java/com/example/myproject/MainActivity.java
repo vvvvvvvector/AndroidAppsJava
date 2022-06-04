@@ -5,7 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnAuthenticationListener {
+import com.example.myproject.fragments.HomeFragment;
+import com.example.myproject.fragments.NotesFragment;
+import com.example.myproject.fragments.SignUpFragment;
+import com.example.myproject.interfaces.OnAuthenticationListener;
+
+public class MainActivity extends AppCompatActivity implements OnAuthenticationListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +31,28 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnAu
     }
 
     @Override
-    public void authenticationOperationPerformed(String method) {
-        switch (method) {
-            case "Sign in":
-                Log.d("doc", "sign in operation");
+    public void authenticationOperationPerformed(String operation) {
+        switch (operation) {
+            case "Sign in button":
+                Log.d("doc", "sign in logic");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NotesFragment())
+                        .addToBackStack(null)
+                        .commit();
                 break;
-            case "Sign up":
+            case "Sign up text":
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new SignUpFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case "Sign up button":
+                Log.d("doc", "sign up logic");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NotesFragment())
                         .addToBackStack(null)
                         .commit();
                 break;

@@ -1,4 +1,4 @@
-package com.example.myproject;
+package com.example.myproject.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,16 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myproject.R;
+import com.example.myproject.interfaces.OnAuthenticationListener;
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     OnAuthenticationListener onAuthenticationListener;
 
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    public interface OnAuthenticationListener {
-        void authenticationOperationPerformed(String method);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,9 +58,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.sign_in_button) {
-            onAuthenticationListener.authenticationOperationPerformed("Sign in");
+            onAuthenticationListener.authenticationOperationPerformed("Sign in button");
         } else if (id == R.id.sign_up_text) {
-            onAuthenticationListener.authenticationOperationPerformed("Sign up");
+            onAuthenticationListener.authenticationOperationPerformed("Sign up text");
         }
     }
 
@@ -73,7 +72,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         try {
             onAuthenticationListener = (OnAuthenticationListener) activity;
         } catch (ClassCastException error) {
-            throw new ClassCastException(activity.toString() + " you must implement interface!");
+            throw new ClassCastException(activity + " you must implement interface!");
         }
     }
 }
