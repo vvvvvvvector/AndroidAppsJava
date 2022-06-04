@@ -3,11 +3,14 @@ package com.example.myproject.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,6 +71,17 @@ public class NotesFragment extends Fragment {
         NotesListAdapter adapter = new NotesListAdapter(requireContext(), R.layout.notes_list_single_note, notes);
 
         notesList.setAdapter(adapter);
+
+        DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
+
+        ImageView menu = view.findViewById(R.id.menu_icon_notes);
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         return view;
     }
