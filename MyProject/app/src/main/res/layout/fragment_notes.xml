@@ -45,6 +45,7 @@
         android:id="@+id/notes_list"
         android:layout_width="match_parent"
         android:layout_height="630dp"
+        android:background="@drawable/list_view_style"
         app:layout_constraintBottom_toTopOf="@id/bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

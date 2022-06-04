@@ -29,29 +29,31 @@
             android:textStyle="bold" />
 
         <EditText
-            android:background="@drawable/layout_background"
             android:id="@+id/sign_in_email"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:autofillHints="emailAddress"
+            android:background="@drawable/layout_background"
             android:ems="10"
             android:inputType="textEmailAddress"
             android:labelFor="@id/sign_in_email"
             android:minHeight="48dp"
-            android:text="@string/user_email" />
+            android:text="@string/user_email"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
-            android:background="@drawable/layout_background"
             android:id="@+id/sign_in_password"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:autofillHints="password"
+            android:background="@drawable/layout_background"
             android:ems="10"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:text="@string/user_password" />
+            android:text="@string/user_password"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/sign_in_button"
