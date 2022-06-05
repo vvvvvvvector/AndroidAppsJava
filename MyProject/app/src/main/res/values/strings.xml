@@ -17,4 +17,7 @@
     <string name="n_notes_temp">n notes</string>
     <string name="note_title">note_title</string>
     <string name="note_text">note_text</string>
+    <string name="note_title_add_note">Title</string>
+    <string name="note_text_add_note">Text</string>
+    <string name="add_note">add note!</string>
 </resources>

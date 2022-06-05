@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.myproject.fragments.HomeFragment;
+import com.example.myproject.fragments.NewNoteFragment;
 import com.example.myproject.fragments.NotesFragment;
 import com.example.myproject.fragments.SignUpFragment;
+import com.example.myproject.interfaces.OnNotesActionListener;
 import com.example.myproject.interfaces.OnAuthenticationListener;
 
-public class MainActivity extends AppCompatActivity implements OnAuthenticationListener {
+public class MainActivity extends AppCompatActivity implements OnAuthenticationListener, OnNotesActionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,28 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 break;
             case "Sign up button":
                 Log.d("doc", "sign up logic");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NotesFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+        }
+    }
+
+    @Override
+    public void notesFragmentOperationPerformed(String operation) {
+        switch (operation) {
+            case "create note":
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NewNoteFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case "new note added":
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new NotesFragment())
