@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 

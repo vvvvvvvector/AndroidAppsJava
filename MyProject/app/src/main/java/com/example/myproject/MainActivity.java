@@ -1,6 +1,7 @@
 package com.example.myproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new NotesFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new SignUpFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new NotesFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null)
                         .commit();
                 break;
