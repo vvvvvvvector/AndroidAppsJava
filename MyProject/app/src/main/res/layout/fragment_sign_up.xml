@@ -6,17 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SignUpFragment">
 
+    <LinearLayout
+        android:id="@+id/go_back_sign_up"
+        android:layout_width="320dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_enter_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/ic_arrow_back"
+            tools:ignore="RedundantDescriptionCheck" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".100"
+            android:gravity="center_vertical"
+            android:text="@string/sign_in"
+            android:textAlignment="gravity"
+            android:textColor="#636363"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/sign_up_enter_email"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_email"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_user_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintTop_toBottomOf="@id/go_back_sign_up" />
 
     <EditText
         android:id="@+id/sign_up_user_email"
@@ -30,6 +63,7 @@
         android:labelFor="@id/sign_up_user_email"
         android:minHeight="48dp"
         android:text=""
+        app:layout_constraintBottom_toTopOf="@id/sign_up_enter_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_enter_email"
@@ -42,6 +76,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/sign_up_password"
         android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_user_email" />
@@ -57,6 +92,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:text=""
+        app:layout_constraintBottom_toTopOf="@id/sign_up_enter_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_enter_password"
@@ -69,6 +105,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/sign_up_confirm_password"
         android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_password" />
@@ -84,6 +121,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:text=""
+        app:layout_constraintBottom_toTopOf="@id/sign_up_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_enter_confirm_password"
@@ -95,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/sign_up_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_confirm_password"
