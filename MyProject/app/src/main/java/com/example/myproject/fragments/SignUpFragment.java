@@ -12,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
+import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     OnAuthenticationListener onAuthenticationListener;
+    OnBackButtonListener onBackButtonListener;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -33,6 +36,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         EditText userPassword = view.findViewById(R.id.sign_up_password);
         EditText userConfirmPassword = view.findViewById(R.id.sign_up_confirm_password);
         Button signUpButton = view.findViewById(R.id.sign_up_button);
+
+        LinearLayout backButton = view.findViewById(R.id.go_back_sign_up);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackButtonListener.onClickListener();
+            }
+        });
 
         signUpButton.setOnClickListener(this);
 
@@ -55,6 +66,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         try {
             onAuthenticationListener = (OnAuthenticationListener) activity;
+            onBackButtonListener = (OnBackButtonListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity.toString() + " you must implement interface!");
         }

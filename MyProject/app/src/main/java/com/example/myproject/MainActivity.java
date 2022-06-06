@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.fragments.EditNoteFragment;
 import com.example.myproject.fragments.SignInFragment;
@@ -16,7 +17,9 @@ import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
 public class MainActivity extends AppCompatActivity implements OnAuthenticationListener,
-        OnAddNoteListener, OnViewNoteListener {
+        OnAddNoteListener,
+        OnViewNoteListener,
+        OnBackButtonListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,5 +107,10 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onClickListener() {
+        getSupportFragmentManager().popBackStack();
     }
 }

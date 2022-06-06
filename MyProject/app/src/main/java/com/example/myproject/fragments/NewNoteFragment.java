@@ -12,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
+import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 
 public class NewNoteFragment extends Fragment {
 
     OnAddNoteListener onAddNoteListener;
+    OnBackButtonListener onBackButtonListener;
 
     public NewNoteFragment() {
         // Required empty public constructor
@@ -32,6 +35,15 @@ public class NewNoteFragment extends Fragment {
         EditText title = view.findViewById(R.id.new_note_title);
         EditText text = view.findViewById(R.id.new_note_text);
         Button add = view.findViewById(R.id.add_new_note);
+
+        LinearLayout backButton = view.findViewById(R.id.go_back_new_note);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackButtonListener.onClickListener();
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +64,7 @@ public class NewNoteFragment extends Fragment {
 
         try {
             onAddNoteListener = (OnAddNoteListener) activity;
+            onBackButtonListener = (OnBackButtonListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity.toString() + " you must implement interface!");
         }

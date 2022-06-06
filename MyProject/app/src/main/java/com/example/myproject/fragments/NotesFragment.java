@@ -126,7 +126,7 @@ public class NotesFragment extends Fragment {
         Note note_2 = new Note("title 2", "text 2");
         Note note_3 = new Note("title 3", "text 3");
         Note note_4 = new Note("title 4", "text 4");
-        Note note_5 = new Note("title 5", "text 5");
+        Note note_5 = new Note("Note with long text", "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
         Note note_6 = new Note("title 6", "text 6");
         Note note_7 = new Note("title 7", "text 7");
         Note note_8 = new Note("title 8", "text 8");
