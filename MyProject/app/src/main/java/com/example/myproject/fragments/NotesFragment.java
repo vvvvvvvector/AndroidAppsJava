@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
 import com.example.myproject.customclasses.Note;
-import com.example.myproject.interfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnNotesActionListener;
 
 import java.util.ArrayList;
 

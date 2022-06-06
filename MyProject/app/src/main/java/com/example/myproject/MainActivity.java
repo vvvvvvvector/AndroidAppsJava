@@ -10,8 +10,8 @@ import com.example.myproject.fragments.HomeFragment;
 import com.example.myproject.fragments.NewNoteFragment;
 import com.example.myproject.fragments.NotesFragment;
 import com.example.myproject.fragments.SignUpFragment;
-import com.example.myproject.interfaces.OnNotesActionListener;
-import com.example.myproject.interfaces.OnAuthenticationListener;
+import com.example.myproject.callbackinterfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
 public class MainActivity extends AppCompatActivity implements OnAuthenticationListener, OnNotesActionListener {
 
@@ -38,11 +38,12 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
         switch (operation) {
             case "Sign in button":
                 Log.d("doc", "sign in logic");
+                getSupportFragmentManager().popBackStack();
+
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new NotesFragment())
+                        .add(R.id.fragment_container, new NotesFragment())
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
                         .commit();
                 break;
             case "Sign up text":
@@ -55,11 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                 break;
             case "Sign up button":
                 Log.d("doc", "sign up logic");
+                getSupportFragmentManager().popBackStack();
+
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new NotesFragment())
+                        .add(R.id.fragment_container, new NotesFragment())
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
                         .commit();
                 break;
         }
@@ -77,11 +79,12 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                         .commit();
                 break;
             case "new note added":
+                getSupportFragmentManager().popBackStack();
+
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new NotesFragment())
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null)
                         .commit();
                 break;
         }

@@ -1,4 +1,4 @@
-package com.example.myproject.interfaces;
+package com.example.myproject.callbackinterfaces;
 
 public interface OnAuthenticationListener {
     void authenticationOperationPerformed(String operation);

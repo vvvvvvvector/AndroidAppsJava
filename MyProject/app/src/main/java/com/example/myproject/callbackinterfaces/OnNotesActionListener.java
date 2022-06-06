@@ -1,6 +1,4 @@
-package com.example.myproject.interfaces;
-
-import androidx.fragment.app.Fragment;
+package com.example.myproject.callbackinterfaces;
 
 public interface OnNotesActionListener {
     void notesFragmentOperationPerformed(String operation);

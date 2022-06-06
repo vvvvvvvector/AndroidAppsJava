@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myproject.R;
-import com.example.myproject.interfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnNotesActionListener;
 
 public class NewNoteFragment extends Fragment {
 

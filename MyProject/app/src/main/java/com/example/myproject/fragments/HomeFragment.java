@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myproject.R;
-import com.example.myproject.interfaces.OnAuthenticationListener;
+import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 

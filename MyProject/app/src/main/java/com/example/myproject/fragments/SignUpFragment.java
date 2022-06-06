@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myproject.R;
-import com.example.myproject.interfaces.OnAuthenticationListener;
+import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
