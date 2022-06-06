@@ -25,4 +25,6 @@
     <string name="notes_list_logo">notes list logo</string>
     <string name="your_tasks_drawer">Your tasks</string>
     <string name="logout_drawer">Logout</string>
+    <string name="back_button">back button</string>
+    <string name="go_back_notes">Notes</string>
 </resources>
