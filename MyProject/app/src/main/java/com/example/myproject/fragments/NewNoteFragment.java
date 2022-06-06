@@ -14,11 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myproject.R;
-import com.example.myproject.callbackinterfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 
 public class NewNoteFragment extends Fragment {
 
-    OnNotesActionListener onNotesActionListener;
+    OnAddNoteListener onAddNoteListener;
 
     public NewNoteFragment() {
         // Required empty public constructor
@@ -37,7 +37,7 @@ public class NewNoteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // here add to database logic
-                onNotesActionListener.notesFragmentOperationPerformed("new note added");
+                onAddNoteListener.notesAddOperationPerformed("new note added");
             }
         });
 
@@ -51,7 +51,7 @@ public class NewNoteFragment extends Fragment {
         Activity activity = (Activity) context;
 
         try {
-            onNotesActionListener = (OnNotesActionListener) activity;
+            onAddNoteListener = (OnAddNoteListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity.toString() + " you must implement interface!");
         }

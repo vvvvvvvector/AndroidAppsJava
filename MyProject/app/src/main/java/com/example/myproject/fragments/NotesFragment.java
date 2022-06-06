@@ -20,14 +20,16 @@ import android.widget.TextView;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
+import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.customclasses.Note;
-import com.example.myproject.callbackinterfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 
 import java.util.ArrayList;
 
 public class NotesFragment extends Fragment {
 
-    OnNotesActionListener onNotesActionListener;
+    OnAddNoteListener onAddNoteListener;
+    OnViewNoteListener onViewNoteListener;
 
     ArrayList<Note> notes = new ArrayList<>();
 
@@ -66,16 +68,16 @@ public class NotesFragment extends Fragment {
         newNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onNotesActionListener.notesFragmentOperationPerformed("create note");
+                onAddNoteListener.notesAddOperationPerformed("create note");
             }
         });
 
         notesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                notes.remove(i);
-                notesNumber.setText(notes.size() + " notes");
-                adapter.notifyDataSetChanged();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("note", notes.get(i));
+                onViewNoteListener.onViewOperationPerformed(bundle);
             }
         });
 
@@ -121,7 +123,8 @@ public class NotesFragment extends Fragment {
         Activity activity = (Activity) context;
 
         try {
-            onNotesActionListener = (OnNotesActionListener) activity;
+            onAddNoteListener = (OnAddNoteListener) activity;
+            onViewNoteListener = (OnViewNoteListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity + " you must implement interface!");
         }

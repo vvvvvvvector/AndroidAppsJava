@@ -17,11 +17,11 @@ import android.widget.TextView;
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class SignInFragment extends Fragment implements View.OnClickListener {
 
     OnAuthenticationListener onAuthenticationListener;
 
-    public HomeFragment() {
+    public SignInFragment() {
         // Required empty public constructor
     }
 

@@ -6,14 +6,17 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.myproject.fragments.HomeFragment;
+import com.example.myproject.callbackinterfaces.OnViewNoteListener;
+import com.example.myproject.fragments.EditNoteFragment;
+import com.example.myproject.fragments.SignInFragment;
 import com.example.myproject.fragments.NewNoteFragment;
 import com.example.myproject.fragments.NotesFragment;
 import com.example.myproject.fragments.SignUpFragment;
-import com.example.myproject.callbackinterfaces.OnNotesActionListener;
+import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
-public class MainActivity extends AppCompatActivity implements OnAuthenticationListener, OnNotesActionListener {
+public class MainActivity extends AppCompatActivity implements OnAuthenticationListener,
+        OnAddNoteListener, OnViewNoteListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +29,10 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
             }
         }
 
-        HomeFragment homeFragment = new HomeFragment();
+        SignInFragment signInFragment = new SignInFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, homeFragment)
+                .add(R.id.fragment_container, signInFragment)
                 .commit();
     }
 
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
     }
 
     @Override
-    public void notesFragmentOperationPerformed(String operation) {
+    public void notesAddOperationPerformed(String operation) {
         switch (operation) {
             case "create note":
                 getSupportFragmentManager()
@@ -88,5 +91,18 @@ public class MainActivity extends AppCompatActivity implements OnAuthenticationL
                         .commit();
                 break;
         }
+    }
+
+    @Override
+    public void onViewOperationPerformed(Bundle bundle) {
+        EditNoteFragment editNoteFragment = new EditNoteFragment();
+        editNoteFragment.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, editNoteFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null)
+                .commit();
     }
 }
