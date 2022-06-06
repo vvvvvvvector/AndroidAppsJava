@@ -2,7 +2,10 @@ package com.example.myproject.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,6 +81,35 @@ public class NotesFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("note", notes.get(i));
                 onViewNoteListener.onViewOperationPerformed(bundle);
+            }
+        });
+
+        notesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int index, long l) {
+                AlertDialog.Builder communicate = new AlertDialog.Builder(getContext());
+                communicate.setMessage("Do you really want to delete this note?");
+
+                communicate.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        notes.remove(index);
+                        notesNumber.setText(notes.size() + " notes");
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                communicate.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // closing alertdialog
+                    }
+                });
+
+                AlertDialog alertDialog = communicate.create();
+                alertDialog.show();
+
+                return true;
             }
         });
 
