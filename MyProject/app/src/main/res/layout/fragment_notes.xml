@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:contentDescription="@string/menu_icon"
-                android:src="@drawable/ic_menu" />
+                android:src="@drawable/ic_menu_open" />
 
             <TextView
                 android:id="@+id/header_notes_user_text"
@@ -96,29 +96,93 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        android:clickable="true">
+        android:clickable="true"
+        android:padding="20dp">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:text="Your notes" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/button1"
-            android:layout_centerHorizontal="true"
-            android:text="Your tasks" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/drawer_items_style"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
-        <Button
-            android:layout_width="150dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/your_notes_drawer"
+                    android:textColor="#636363"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/notes_list_logo"
+                    android:src="@drawable/ic_notes"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/drawer_items_style"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/your_tasks_drawer"
+                    android:textColor="#636363"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/notes_list_logo"
+                    android:src="@drawable/ic_checklist"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/button2"
-            android:layout_centerHorizontal="true"
-            android:text="Logout" />
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/drawer_items_style"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/logout_drawer"
+                android:textColor="#636363"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/notes_list_logo"
+                android:src="@drawable/ic_logout"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

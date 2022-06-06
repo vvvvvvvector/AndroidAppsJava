@@ -21,4 +21,8 @@
     <string name="note_text_add_note">Text…</string>
     <string name="add_note">add note!</string>
     <string name="edit_note">confirm changes</string>
+    <string name="your_notes_drawer">Your notes</string>
+    <string name="notes_list_logo">notes list logo</string>
+    <string name="your_tasks_drawer">Your tasks</string>
+    <string name="logout_drawer">Logout</string>
 </resources>
