@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
+import com.example.myproject.callbackinterfaces.OnEditNoteListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.fragments.EditNoteFragment;
 import com.example.myproject.fragments.SignInFragment;
@@ -20,7 +21,8 @@ public class MainActivity extends AppCompatActivity implements
         OnAuthenticationListener,
         OnAddNoteListener,
         OnViewNoteListener,
-        OnBackButtonListener {
+        OnBackButtonListener,
+        OnEditNoteListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +115,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onClickListener() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onEditOperationPerformed() {
+        getSupportFragmentManager().popBackStack();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new NotesFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
     }
 }

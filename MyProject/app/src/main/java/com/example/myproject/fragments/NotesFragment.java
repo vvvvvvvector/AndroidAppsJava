@@ -118,6 +118,7 @@ public class NotesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("note", notes.get(i));
+                bundle.putString("id", notesIds.get(i));
                 onViewNoteListener.onViewOperationPerformed(bundle);
             }
         });

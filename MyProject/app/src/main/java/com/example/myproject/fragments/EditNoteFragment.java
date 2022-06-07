@@ -20,13 +20,20 @@ import android.widget.LinearLayout;
 
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
+import com.example.myproject.callbackinterfaces.OnEditNoteListener;
 import com.example.myproject.customclasses.Note;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EditNoteFragment extends Fragment {
 
     Note receivedNote;
+    String noteId;
 
     OnBackButtonListener onBackButtonListener;
+    OnEditNoteListener onEditNoteListener;
 
     public EditNoteFragment() {
         // Required empty public constructor
@@ -39,6 +46,7 @@ public class EditNoteFragment extends Fragment {
         Bundle bundle = getArguments();
         assert bundle != null;
         receivedNote = (Note) bundle.getSerializable("note");
+        noteId = (String) bundle.getString("id");
     }
 
     @Override
@@ -62,6 +70,26 @@ public class EditNoteFragment extends Fragment {
         noteText.setText(receivedNote.getText());
 
         Button saveButton = view.findViewById(R.id.save_edited_note);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String updatedNoteTitle = noteTitle.getText().toString();
+                String updatedNoteText = noteText.getText().toString();
+
+                Note updatedNote = new Note(updatedNoteTitle, updatedNoteText);
+
+                FirebaseFirestore.getInstance()
+                        .collection("users/"
+                                + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                + "/notes")
+                        .document(noteId)
+                        .set(updatedNote);
+
+                onEditNoteListener.onEditOperationPerformed();
+            }
+        });
+
         saveButton.setEnabled(false);
 
         noteText.addTextChangedListener(new TextWatcher() {
@@ -111,6 +139,7 @@ public class EditNoteFragment extends Fragment {
 
         try {
             onBackButtonListener = (OnBackButtonListener) activity;
+            onEditNoteListener = (OnEditNoteListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity.toString() + " you must implement interface!");
         }
