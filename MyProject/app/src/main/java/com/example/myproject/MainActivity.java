@@ -16,7 +16,8 @@ import com.example.myproject.fragments.SignUpFragment;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
 
-public class MainActivity extends AppCompatActivity implements OnAuthenticationListener,
+public class MainActivity extends AppCompatActivity implements
+        OnAuthenticationListener,
         OnAddNoteListener,
         OnViewNoteListener,
         OnBackButtonListener {
