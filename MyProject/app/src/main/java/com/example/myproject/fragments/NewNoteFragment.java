@@ -17,6 +17,10 @@ import android.widget.LinearLayout;
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
+import com.example.myproject.customclasses.Note;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NewNoteFragment extends Fragment {
 
@@ -48,7 +52,17 @@ public class NewNoteFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // here add to database logic
+                String newNoteTitle = title.getText().toString();
+                String newNoteText = text.getText().toString();
+
+                Note newNote = new Note(newNoteTitle, newNoteText);
+
+                FirebaseFirestore.getInstance()
+                        .collection("users/"
+                                + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                + "/notes").document()
+                        .set(newNote);
+
                 onAddNoteListener.notesAddOperationPerformed("new note added");
             }
         });
