@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
@@ -43,6 +44,8 @@ public class NotesFragment extends Fragment {
     OnViewNoteListener onViewNoteListener;
 
     ArrayList<Note> notes;
+    ArrayList<String> notesIds;
+
     NotesListAdapter adapter;
 
     ListView notesList;
@@ -53,7 +56,7 @@ public class NotesFragment extends Fragment {
     }
 
     private interface FireBaseCallback {
-        void onCallback(ArrayList<Note> fetchedNotes);
+        void onCallback(ArrayList<Note> fetchedNotes, ArrayList<String> fetchedNotesIds);
     }
 
     @Override
@@ -61,13 +64,15 @@ public class NotesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         notes = new ArrayList<>();
+        notesIds = new ArrayList<>();
         adapter = new NotesListAdapter(requireContext(), R.layout.notes_list_single_note, notes);
 
         readUserNotesFromDatabase(new FireBaseCallback() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onCallback(ArrayList<Note> fetchedNotes) {
+            public void onCallback(ArrayList<Note> fetchedNotes, ArrayList<String> fetchedNotesIds) {
                 notes.addAll(fetchedNotes);
+                notesIds.addAll(fetchedNotesIds);
 
                 notesNumber.setText(notes.size() + " notes");
 
@@ -126,6 +131,23 @@ public class NotesFragment extends Fragment {
                 communicate.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseFirestore.getInstance()
+                                .collection("users/"
+                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                        + "/notes")
+                                .document(notesIds.get(index))
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getActivity(), "note was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), "note wasn't deleted!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                         notes.remove(index);
                         notesNumber.setText(notes.size() + " notes");
                         adapter.notifyDataSetChanged();
@@ -151,6 +173,8 @@ public class NotesFragment extends Fragment {
 
     public void readUserNotesFromDatabase(FireBaseCallback fireBaseCallback) {
         ArrayList<Note> fetchedNotes = new ArrayList<>();
+        ArrayList<String> fetchedNotesIds = new ArrayList<>();
+
         FirebaseFirestore.getInstance()
                 .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/notes")
                 .get()
@@ -169,8 +193,9 @@ public class NotesFragment extends Fragment {
                                 Log.d("data", text);
 
                                 fetchedNotes.add(fetchedNote);
+                                fetchedNotesIds.add(doc.getId());
                             }
-                            fireBaseCallback.onCallback(fetchedNotes);
+                            fireBaseCallback.onCallback(fetchedNotes, fetchedNotesIds);
                         }
                     }
                 });
