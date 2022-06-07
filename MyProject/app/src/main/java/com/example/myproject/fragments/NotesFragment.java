@@ -3,16 +3,17 @@ package com.example.myproject.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +27,53 @@ import com.example.myproject.adapters.NotesListAdapter;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.customclasses.Note;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class NotesFragment extends Fragment {
 
     OnAddNoteListener onAddNoteListener;
     OnViewNoteListener onViewNoteListener;
 
-    ArrayList<Note> notes = new ArrayList<>();
+    ArrayList<Note> notes;
+    NotesListAdapter adapter;
+
+    ListView notesList;
+    TextView notesNumber;
 
     public NotesFragment() {
         // Required empty public constructor
+    }
+
+    private interface FireBaseCallback {
+        void onCallback(ArrayList<Note> fetchedNotes);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        notes = new ArrayList<>();
+        adapter = new NotesListAdapter(requireContext(), R.layout.notes_list_single_note, notes);
+
+        readUserNotesFromDatabase(new FireBaseCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onCallback(ArrayList<Note> fetchedNotes) {
+                notes.addAll(fetchedNotes);
+
+                notesNumber.setText(notes.size() + " notes");
+
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -46,14 +82,11 @@ public class NotesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
-        ListView notesList = view.findViewById(R.id.notes_list);
-        TextView notesNumber = view.findViewById(R.id.notes_number);
-
-        notesNumber.setText(notes.size() + " notes");
-
-        NotesListAdapter adapter = new NotesListAdapter(requireContext(), R.layout.notes_list_single_note, notes);
-
+        notesList = view.findViewById(R.id.notes_list);
         notesList.setAdapter(adapter);
+
+        notesNumber = view.findViewById(R.id.notes_number);
+        notesNumber.setText(notes.size() + " notes");
 
         DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
 
@@ -116,41 +149,36 @@ public class NotesFragment extends Fragment {
         return view;
     }
 
+    public void readUserNotesFromDatabase(FireBaseCallback fireBaseCallback) {
+        ArrayList<Note> fetchedNotes = new ArrayList<>();
+        FirebaseFirestore.getInstance()
+                .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/notes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                Map<String, Object> note = doc.getData();
+
+                                String title = (String) note.get("title");
+                                String text = (String) note.get("text");
+
+                                Note fetchedNote = new Note(title, text);
+
+                                Log.d("data", text);
+
+                                fetchedNotes.add(fetchedNote);
+                            }
+                            fireBaseCallback.onCallback(fetchedNotes);
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-        // fetch data from database
-
-        Note note_1 = new Note("title 1", "text 1");
-        Note note_2 = new Note("title 2", "text 2");
-        Note note_3 = new Note("title 3", "text 3");
-        Note note_4 = new Note("title 4", "text 4");
-        Note note_5 = new Note("Note with long text", "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
-        Note note_6 = new Note("title 6", "text 6");
-        Note note_7 = new Note("title 7", "text 7");
-        Note note_8 = new Note("title 8", "text 8");
-        Note note_9 = new Note("title 9", "text 9");
-        Note note_10 = new Note("title 10", "text 10");
-        Note note_11 = new Note("title 11", "text 11");
-        Note note_12 = new Note("title 12", "text 12");
-        Note note_13 = new Note("title 13", "text 13");
-        Note note_14 = new Note("title 14", "text 14");
-
-        notes.add(note_1);
-        notes.add(note_2);
-        notes.add(note_3);
-        notes.add(note_4);
-        notes.add(note_5);
-        notes.add(note_6);
-        notes.add(note_7);
-        notes.add(note_8);
-        notes.add(note_9);
-        notes.add(note_10);
-        notes.add(note_11);
-        notes.add(note_12);
-        notes.add(note_13);
-        notes.add(note_14);
 
         Activity activity = (Activity) context;
 
