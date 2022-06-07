@@ -113,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onClickListener() {
+    public void onBackButtonClickListener() {
         getSupportFragmentManager().popBackStack();
     }
 
     @Override
-    public void onEditOperationPerformed() {
+    public void onSaveOperationPerformed() {
         getSupportFragmentManager().popBackStack();
 
         getSupportFragmentManager()

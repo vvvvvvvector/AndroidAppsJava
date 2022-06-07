@@ -22,8 +22,6 @@ import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 import com.example.myproject.callbackinterfaces.OnEditNoteListener;
 import com.example.myproject.customclasses.Note;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -62,7 +60,7 @@ public class EditNoteFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackButtonListener.onClickListener();
+                onBackButtonListener.onBackButtonClickListener();
             }
         });
 
@@ -86,7 +84,7 @@ public class EditNoteFragment extends Fragment {
                         .document(noteId)
                         .set(updatedNote);
 
-                onEditNoteListener.onEditOperationPerformed();
+                onEditNoteListener.onSaveOperationPerformed();
             }
         });
 
@@ -141,7 +139,7 @@ public class EditNoteFragment extends Fragment {
             onBackButtonListener = (OnBackButtonListener) activity;
             onEditNoteListener = (OnEditNoteListener) activity;
         } catch (ClassCastException error) {
-            throw new ClassCastException(activity.toString() + " you must implement interface!");
+            throw new ClassCastException(activity + " you must implement interface!");
         }
     }
 }

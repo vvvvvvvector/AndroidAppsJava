@@ -45,7 +45,7 @@ public class NewNoteFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackButtonListener.onClickListener();
+                onBackButtonListener.onBackButtonClickListener();
             }
         });
 
