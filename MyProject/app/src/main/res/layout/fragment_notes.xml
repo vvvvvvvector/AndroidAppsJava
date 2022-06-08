@@ -106,6 +106,7 @@
             tools:ignore="UselessParent">
 
             <LinearLayout
+                android:id="@+id/drawer_user_notes"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/drawer_items_style"

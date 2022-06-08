@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -101,7 +100,15 @@ public class NotesFragment extends Fragment {
 
         ImageView menu = view.findViewById(R.id.menu_icon_notes);
 
+        LinearLayout drawerUserNotes = view.findViewById(R.id.drawer_user_notes);
         LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
+
+        drawerUserNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
 
         drawerSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
