@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:contentDescription="@string/new_note_icon"
-                android:src="@drawable/ic_new_note" />
+                android:src="@drawable/ic_add_task" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
