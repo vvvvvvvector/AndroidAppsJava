@@ -33,4 +33,8 @@
     <string name="your_tasks">Your tasks</string>
     <string name="n_tasks">n tasks</string>
     <string name="tasks_drawer_logout_logo">tasks_drawer_logout_logo</string>
+    <string name="delete_task">delete task</string>
+    <string name="task_text">Task text</string>
+    <string name="date_26_10_2021">date: 26/10/2021</string>
+    <string name="time_22_30">time: 22:30</string>
 </resources>

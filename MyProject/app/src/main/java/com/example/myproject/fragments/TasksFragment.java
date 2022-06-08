@@ -1,5 +1,6 @@
 package com.example.myproject.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,30 +8,48 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.myproject.R;
-import com.example.myproject.callbackinterfaces.OnAddNoteListener;
+import com.example.myproject.adapters.TasksListAdapter;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
-import com.example.myproject.callbackinterfaces.OnViewNoteListener;
+import com.example.myproject.customclasses.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 public class TasksFragment extends Fragment {
 
     OnDrawerListener onDrawerListener;
 
+    ArrayList<Task> tasks;
+    TasksListAdapter adapter;
+
     public TasksFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        adapter = new TasksListAdapter(requireContext(), R.layout.tasks_list_single_task, tasks);
+    }
+
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +61,20 @@ public class TasksFragment extends Fragment {
         LinearLayout drawerUserNotes = view.findViewById(R.id.drawer_user_notes);
         LinearLayout drawerUserTasks = view.findViewById(R.id.drawer_user_tasks);
         LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
+
+        ListView tasksList = view.findViewById(R.id.tasks_list);
+
+        tasksList.setAdapter(adapter);
+
+        TextView tasksNumber = view.findViewById(R.id.tasks_number);
+        tasksNumber.setText(tasks.size() + " tasks");
+
+        tasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Log.d("doc", tasks.get(index).getText());
+            }
+        });
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +131,40 @@ public class TasksFragment extends Fragment {
         super.onAttach(context);
 
         Activity activity = (Activity) context;
+
+        tasks = new ArrayList<>();
+
+        Task task1 = new Task(false, "text 1", "23/05/2022", 22L, 45L);
+        Task task2 = new Task(true, "text 2", "22/04/2022", 21L, 44L);
+        Task task3 = new Task(false, "text 3", "21/03/2022", 20L, 43L);
+        Task task4 = new Task(true, "text 4", "20/02/2022", 19L, 42L);
+        Task task5 = new Task(false, "text 5", "19/01/2022", 18L, 41L);
+        Task task6 = new Task(false, "text 6", "18/05/2022", 22L, 45L);
+        Task task7 = new Task(true, "text 7", "17/04/2022", 21L, 44L);
+        Task task8 = new Task(false, "text 8", "16/03/2022", 20L, 43L);
+        Task task9 = new Task(true, "text 9", "15/02/2022", 19L, 42L);
+        Task task10 = new Task(false, "text 10", "14/01/2022", 18L, 41L);
+        Task task11 = new Task(false, "text 11", "13/05/2022", 22L, 45L);
+        Task task12 = new Task(true, "text 12", "12/04/2022", 21L, 44L);
+        Task task13 = new Task(false, "text 13", "11/03/2022", 20L, 43L);
+        Task task14 = new Task(true, "text 14", "10/02/2022", 19L, 42L);
+        Task task15 = new Task(false, "text 15", "09/01/2022", 18L, 41L);
+
+        tasks.add(task1);
+        tasks.add(task2);
+        tasks.add(task3);
+        tasks.add(task4);
+        tasks.add(task5);
+        tasks.add(task6);
+        tasks.add(task7);
+        tasks.add(task8);
+        tasks.add(task9);
+        tasks.add(task10);
+        tasks.add(task11);
+        tasks.add(task12);
+        tasks.add(task13);
+        tasks.add(task14);
+        tasks.add(task15);
 
         try {
             onDrawerListener = (OnDrawerListener) activity;
