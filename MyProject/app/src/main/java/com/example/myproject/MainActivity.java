@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
+import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.callbackinterfaces.OnEditNoteListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.fragments.EditNoteFragment;
@@ -22,7 +23,8 @@ public class MainActivity extends AppCompatActivity implements
         OnAddNoteListener,
         OnViewNoteListener,
         OnBackButtonListener,
-        OnEditNoteListener {
+        OnEditNoteListener,
+        OnDrawerListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,5 +128,23 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.fragment_container, new NotesFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+    }
+
+    @Override
+    public void onDrawerOperationPerformed(String operation) {
+        switch (operation) {
+            case "sign out":
+                getSupportFragmentManager().popBackStack();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new SignInFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+                break;
+            case "user tasks":
+                Log.d("doc", "go to tasks fragment");
+                break;
+        }
     }
 }

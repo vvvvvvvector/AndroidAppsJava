@@ -18,13 +18,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
+import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.customclasses.Note;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
@@ -42,6 +45,7 @@ public class NotesFragment extends Fragment {
 
     OnAddNoteListener onAddNoteListener;
     OnViewNoteListener onViewNoteListener;
+    OnDrawerListener onDrawerListener;
 
     ArrayList<Note> notes;
     ArrayList<String> notesIds;
@@ -96,6 +100,34 @@ public class NotesFragment extends Fragment {
         DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
 
         ImageView menu = view.findViewById(R.id.menu_icon_notes);
+
+        LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
+
+        drawerSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder communicate = new AlertDialog.Builder(getContext());
+                communicate.setMessage("Do you really want to sign out?");
+
+                communicate.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseAuth.getInstance().signOut();
+                        onDrawerListener.onDrawerOperationPerformed("sign out");
+                    }
+                });
+
+                communicate.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do nothing
+                    }
+                });
+
+                AlertDialog alertDialog = communicate.create();
+                alertDialog.show();
+            }
+        });
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +243,7 @@ public class NotesFragment extends Fragment {
         try {
             onAddNoteListener = (OnAddNoteListener) activity;
             onViewNoteListener = (OnViewNoteListener) activity;
+            onDrawerListener = (OnDrawerListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity + " you must implement interface!");
         }
