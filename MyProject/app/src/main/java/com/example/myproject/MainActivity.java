@@ -17,6 +17,7 @@ import com.example.myproject.fragments.NotesFragment;
 import com.example.myproject.fragments.SignUpFragment;
 import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnAuthenticationListener;
+import com.example.myproject.fragments.TasksFragment;
 
 public class MainActivity extends AppCompatActivity implements
         OnAuthenticationListener,
@@ -142,8 +143,23 @@ public class MainActivity extends AppCompatActivity implements
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit();
                 break;
-            case "user tasks":
-                Log.d("doc", "go to tasks fragment");
+            case "go to user tasks":
+                getSupportFragmentManager().popBackStack();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new TasksFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+                break;
+            case "go to user notes":
+                getSupportFragmentManager().popBackStack();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NotesFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
                 break;
         }
     }

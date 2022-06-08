@@ -28,4 +28,9 @@
     <string name="back_button">back button</string>
     <string name="go_back_notes">Notes</string>
     <string name="sign_in">Sign in</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="your_tasks">Your tasks</string>
+    <string name="n_tasks">n tasks</string>
+    <string name="tasks_drawer_logout_logo">tasks_drawer_logout_logo</string>
 </resources>

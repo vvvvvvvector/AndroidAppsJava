@@ -13,11 +13,11 @@
         android:padding="15dp">
 
         <LinearLayout
-            android:id="@+id/header_notes"
+            android:id="@+id/header_tasks"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/notes_list"
+            app:layout_constraintBottom_toTopOf="@id/tasks_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +26,7 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/menu_icon_notes"
+                android:id="@+id/menu_icon_tasks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -34,12 +34,12 @@
                 android:src="@drawable/ic_menu_open" />
 
             <TextView
-                android:id="@+id/header_notes_user_text"
+                android:id="@+id/header_tasks_user_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".100"
                 android:gravity="center_vertical"
-                android:text="@string/your_notes_text"
+                android:text="@string/your_tasks"
                 android:textAlignment="gravity"
                 android:textColor="#636363"
                 android:textSize="20sp"
@@ -48,14 +48,14 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/notes_list"
+            android:id="@+id/tasks_list"
             android:layout_width="match_parent"
             android:layout_height="660dp"
             android:background="@drawable/list_view_style"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_notes" />
+            app:layout_constraintTop_toBottomOf="@id/header_tasks" />
 
         <LinearLayout
             android:id="@+id/bottom"
@@ -65,16 +65,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/notes_list"
+            app:layout_constraintTop_toBottomOf="@id/tasks_list"
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/notes_number"
+                android:id="@+id/tasks_number"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".100"
                 android:gravity="center_vertical"
-                android:text="@string/n_notes_temp"
+                android:text="@string/n_tasks"
                 android:textAlignment="gravity"
                 android:textColor="#636363"
                 android:textSize="20sp"
@@ -125,7 +125,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/notes_list_logo"
+                    android:contentDescription="@string/your_notes_drawer"
                     android:src="@drawable/ic_notes"
                     android:textAlignment="center" />
 
@@ -152,7 +152,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/notes_list_logo"
+                    android:contentDescription="@string/your_tasks_drawer"
                     android:src="@drawable/ic_checklist"
                     android:textAlignment="center" />
 
@@ -181,7 +181,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/notes_list_logo"
+                android:contentDescription="@string/tasks_drawer_logout_logo"
                 android:src="@drawable/ic_logout"
                 android:textAlignment="center" />
 

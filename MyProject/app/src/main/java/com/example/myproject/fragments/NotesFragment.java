@@ -101,12 +101,20 @@ public class NotesFragment extends Fragment {
         ImageView menu = view.findViewById(R.id.menu_icon_notes);
 
         LinearLayout drawerUserNotes = view.findViewById(R.id.drawer_user_notes);
+        LinearLayout drawerUserTasks = view.findViewById(R.id.drawer_user_tasks);
         LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
 
         drawerUserNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        drawerUserTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDrawerListener.onDrawerOperationPerformed("go to user tasks");
             }
         });
 
