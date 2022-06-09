@@ -66,13 +66,20 @@ public class TasksFragment extends Fragment {
 
         tasksList.setAdapter(adapter);
 
+        adapter.setCallback(new TasksListAdapter.TasksAdapterCallback() {
+            @Override
+            public void checkBoxChanged(int position) {
+                Log.d("doc", "checkbox click " + tasks.get(position).getText());
+            }
+        });
+
         TextView tasksNumber = view.findViewById(R.id.tasks_number);
         tasksNumber.setText(tasks.size() + " tasks");
 
         tasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                Log.d("doc", tasks.get(index).getText());
+                Log.d("doc", "list click " + tasks.get(index).getText());
             }
         });
 

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
+import com.example.myproject.adapters.TasksListAdapter;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.customclasses.Note;

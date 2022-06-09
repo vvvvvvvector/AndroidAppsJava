@@ -2,6 +2,7 @@ package com.example.myproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,16 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
     private final Context mContext;
     private final int mResource;
     private int lastPosition = -1;
+
+    TasksAdapterCallback callback;
+
+    public interface TasksAdapterCallback {
+        void checkBoxChanged(int position);
+    }
+
+    public void setCallback(TasksAdapterCallback callback) {
+        this.callback = callback;
+    }
 
     static class ViewHolder {
         CheckBox isCompleted;
@@ -86,6 +98,13 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
         holder.date.setText("date: " + taskDate);
 
         holder.time.setText("time: " + taskHour + ":" + taskMinute);
+
+        holder.isCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.checkBoxChanged(position);
+            }
+        });
 
         return convertView;
     }
