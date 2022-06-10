@@ -2,7 +2,6 @@ package com.example.myproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,7 +56,7 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
         Boolean isCompleted = getItem(position).getCompleted();
 
         String taskText = getItem(position).getText();
-        String taskDate = getItem(position).getText();
+        String taskDate = getItem(position).getDate();
 
         Long taskHour = getItem(position).getHour();
         Long taskMinute = getItem(position).getMinute();
