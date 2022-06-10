@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.TasksListAdapter;
+import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.customclasses.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class TasksFragment extends Fragment {
 
+    OnAddTaskListener onAddTaskListener;
     OnDrawerListener onDrawerListener;
 
     ArrayList<Task> tasks;
@@ -63,6 +65,15 @@ public class TasksFragment extends Fragment {
         LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
 
         ListView tasksList = view.findViewById(R.id.tasks_list);
+
+        ImageView createNewTaskIcon = view.findViewById(R.id.add_new_task_icon);
+
+        createNewTaskIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddTaskListener.tasksAddOperationPerformed("create task");
+            }
+        });
 
         tasksList.setAdapter(adapter);
 
@@ -141,21 +152,21 @@ public class TasksFragment extends Fragment {
 
         tasks = new ArrayList<>();
 
-        Task task1 = new Task(false, "text 1", "23/05/2022", 22L, 45L);
-        Task task2 = new Task(true, "text 2", "22/04/2022", 21L, 44L);
-        Task task3 = new Task(false, "text 3", "21/03/2022", 20L, 43L);
-        Task task4 = new Task(true, "text 4", "20/02/2022", 19L, 42L);
-        Task task5 = new Task(false, "text 5", "19/01/2022", 18L, 41L);
-        Task task6 = new Task(false, "text 6", "18/05/2022", 22L, 45L);
-        Task task7 = new Task(true, "text 7", "17/04/2022", 21L, 44L);
-        Task task8 = new Task(false, "text 8", "16/03/2022", 20L, 43L);
-        Task task9 = new Task(true, "text 9", "15/02/2022", 19L, 42L);
-        Task task10 = new Task(false, "text 10", "14/01/2022", 18L, 41L);
-        Task task11 = new Task(false, "text 11", "13/05/2022", 22L, 45L);
-        Task task12 = new Task(true, "text 12", "12/04/2022", 21L, 44L);
-        Task task13 = new Task(false, "text 13", "11/03/2022", 20L, 43L);
-        Task task14 = new Task(true, "text 14", "10/02/2022", 19L, 42L);
-        Task task15 = new Task(false, "text 15", "09/01/2022", 18L, 41L);
+        Task task1 = new Task(false, "Text 1", "23/05/2022", 22L, 45L);
+        Task task2 = new Task(true, "Text 2", "22/04/2022", 21L, 44L);
+        Task task3 = new Task(false, "Text 3", "21/03/2022", 20L, 43L);
+        Task task4 = new Task(true, "Text 4", "20/02/2022", 19L, 42L);
+        Task task5 = new Task(false, "Text 5", "19/01/2022", 18L, 41L);
+        Task task6 = new Task(false, "Text 6", "18/05/2022", 22L, 45L);
+        Task task7 = new Task(true, "Text 7", "17/04/2022", 21L, 44L);
+        Task task8 = new Task(false, "Text 8", "16/03/2022", 20L, 43L);
+        Task task9 = new Task(true, "Text 9", "15/02/2022", 19L, 42L);
+        Task task10 = new Task(false, "Text 10", "14/01/2022", 18L, 41L);
+        Task task11 = new Task(false, "Text 11", "13/05/2022", 22L, 45L);
+        Task task12 = new Task(true, "Text 12", "12/04/2022", 21L, 44L);
+        Task task13 = new Task(false, "Text 13", "11/03/2022", 20L, 43L);
+        Task task14 = new Task(true, "Text 14", "10/02/2022", 19L, 42L);
+        Task task15 = new Task(false, "Text 15", "09/01/2022", 18L, 41L);
 
         tasks.add(task1);
         tasks.add(task2);
@@ -175,6 +186,7 @@ public class TasksFragment extends Fragment {
 
         try {
             onDrawerListener = (OnDrawerListener) activity;
+            onAddTaskListener = (OnAddTaskListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity + " you must implement interface!");
         }

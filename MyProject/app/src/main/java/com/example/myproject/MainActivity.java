@@ -6,11 +6,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.callbackinterfaces.OnEditNoteListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.fragments.EditNoteFragment;
+import com.example.myproject.fragments.NewTaskFragment;
 import com.example.myproject.fragments.SignInFragment;
 import com.example.myproject.fragments.NewNoteFragment;
 import com.example.myproject.fragments.NotesFragment;
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements
         OnViewNoteListener,
         OnBackButtonListener,
         OnEditNoteListener,
-        OnDrawerListener {
+        OnDrawerListener,
+        OnAddTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +162,20 @@ public class MainActivity extends AppCompatActivity implements
                         .beginTransaction()
                         .replace(R.id.fragment_container, new NotesFragment())
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+                break;
+        }
+    }
+
+    @Override
+    public void tasksAddOperationPerformed(String operation) {
+        switch (operation) {
+            case "create task":
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NewTaskFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
                         .commit();
                 break;
         }
