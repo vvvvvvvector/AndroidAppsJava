@@ -36,8 +36,9 @@
     <string name="date_26_10_2021">date: 26/10/2021</string>
     <string name="time_22_30">time: 22:30</string>
     <string name="go_back_tasks">Tasks</string>
-    <string name="your_task_here">Your task here…</string>
+    <string name="your_task_here">Task text…</string>
     <string name="add_task">add task!</string>
     <string name="select_time">Select time:</string>
-    <string name="select_date">select date</string>
+    <string name="select_date">Select date:</string>
+    <string name="default_date_picker">24/08/2020</string>
 </resources>

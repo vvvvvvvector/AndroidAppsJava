@@ -153,12 +153,12 @@ public class TasksFragment extends Fragment {
         tasks = new ArrayList<>();
 
         Task task1 = new Task(false, "Text 1", "23/05/2022", 22L, 45L);
-        Task task2 = new Task(true, "Text 2", "22/04/2022", 21L, 44L);
-        Task task3 = new Task(false, "Text 3", "21/03/2022", 20L, 43L);
+        Task task2 = new Task(true, "Text 2", "22/04/2022", 5L, 3L);
+        Task task3 = new Task(false, "Text 3", "21/03/2022", 7L, 7L);
         Task task4 = new Task(true, "Text 4", "20/02/2022", 19L, 42L);
-        Task task5 = new Task(false, "Text 5", "19/01/2022", 18L, 41L);
+        Task task5 = new Task(false, "Text 5", "19/01/2022", 10L, 1L);
         Task task6 = new Task(false, "Text 6", "18/05/2022", 22L, 45L);
-        Task task7 = new Task(true, "Text 7", "17/04/2022", 21L, 44L);
+        Task task7 = new Task(true, "Text 7", "17/04/2022", 9L, 6L);
         Task task8 = new Task(false, "Text 8", "16/03/2022", 20L, 43L);
         Task task9 = new Task(true, "Text 9", "15/02/2022", 19L, 42L);
         Task task10 = new Task(false, "Text 10", "14/01/2022", 18L, 41L);

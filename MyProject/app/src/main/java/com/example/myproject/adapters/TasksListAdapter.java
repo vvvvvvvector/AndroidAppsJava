@@ -95,9 +95,9 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
         holder.isCompleted.setChecked(isCompleted);
 
         holder.text.setText(taskText);
-        holder.date.setText("date: " + taskDate);
+        holder.date.setText("Date: " + taskDate);
 
-        holder.time.setText("time: " + taskHour + ":" + taskMinute);
+        holder.time.setText("Time: " + (taskHour < 10 ? "0" + taskHour : taskHour) + ":" + (taskMinute < 10 ? "0" + taskMinute : taskMinute));
 
         holder.isCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
