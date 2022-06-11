@@ -2,6 +2,7 @@ package com.example.myproject.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,14 @@ public class SignInFragment extends Fragment {
         EditText userEmail = view.findViewById(R.id.sign_in_email);
         EditText userPassword = view.findViewById(R.id.sign_in_password);
 
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        String savedEmail = sharedPreferences.getString("email", "");
+        userEmail.setText(savedEmail);
+
+        String savedPassword = sharedPreferences.getString("password", "");
+        userPassword.setText(savedPassword);
+
         Button signInButton = view.findViewById(R.id.sign_in_button);
         TextView signUpText = view.findViewById(R.id.sign_up_text);
 
@@ -77,6 +86,14 @@ public class SignInFragment extends Fragment {
                                         // closing keyboard
                                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                                        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor preferencesEditor = preferences.edit();
+
+                                        preferencesEditor.putString("email", userEmailString);
+                                        preferencesEditor.putString("password", userPasswordString);
+
+                                        preferencesEditor.apply();
 
                                         onAuthenticationListener.authenticationOperationPerformed("Sign in button");
                                     } else {
