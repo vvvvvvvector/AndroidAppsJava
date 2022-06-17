@@ -178,6 +178,15 @@ public class MainActivity extends AppCompatActivity implements
                         .addToBackStack(null)
                         .commit();
                 break;
+            case "new task added":
+                getSupportFragmentManager().popBackStack();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new TasksFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+                break;
         }
     }
 }

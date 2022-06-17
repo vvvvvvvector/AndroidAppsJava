@@ -15,17 +15,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import com.example.myproject.R;
+import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
+import com.example.myproject.customclasses.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
 public class NewTaskFragment extends Fragment {
 
     OnBackButtonListener onBackButtonListener;
+    OnAddTaskListener onAddTaskListener;
 
     String date = "";
 
@@ -54,6 +60,8 @@ public class NewTaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_task, container, false);
 
         LinearLayout backButton = view.findViewById(R.id.go_back_new_task);
+
+        EditText taskEditText = view.findViewById(R.id.new_task_text);
 
         Button addTaskButton = view.findViewById(R.id.add_new_task_button);
 
@@ -99,8 +107,19 @@ public class NewTaskFragment extends Fragment {
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("doc", timePicker.getHour() + " " + timePicker.getMinute());
-                Log.d("doc", date);
+                String text = taskEditText.getText().toString();
+                Long hour = (long) timePicker.getHour();
+                Long minute = (long) timePicker.getMinute();
+
+                Task newTask = new Task(false, text, date, hour, minute);
+
+                FirebaseFirestore.getInstance()
+                        .collection("users/"
+                                + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                + "/tasks").document()
+                        .set(newTask);
+
+                onAddTaskListener.tasksAddOperationPerformed("new task added");
             }
         });
 
@@ -115,6 +134,7 @@ public class NewTaskFragment extends Fragment {
 
         try {
             onBackButtonListener = (OnBackButtonListener) activity;
+            onAddTaskListener = (OnAddTaskListener) activity;
         } catch (ClassCastException error) {
             throw new ClassCastException(activity + " you must implement interface!");
         }

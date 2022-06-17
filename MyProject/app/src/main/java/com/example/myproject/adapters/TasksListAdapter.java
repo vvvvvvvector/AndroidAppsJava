@@ -36,7 +36,7 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
     }
 
     static class ViewHolder {
-        CheckBox isCompleted;
+        CheckBox completed;
         TextView text;
         TextView date;
         TextView time;
@@ -53,7 +53,7 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // get task information
-        Boolean isCompleted = getItem(position).getCompleted();
+        Boolean completed = getItem(position).getCompleted();
 
         String taskText = getItem(position).getText();
         String taskDate = getItem(position).getDate();
@@ -72,7 +72,7 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
             convertView = inflater.inflate(mResource, parent, false);
 
             holder = new ViewHolder();
-            holder.isCompleted = convertView.findViewById(R.id.task_checkbox);
+            holder.completed = convertView.findViewById(R.id.task_checkbox);
             holder.text = convertView.findViewById(R.id.task_text);
             holder.date = convertView.findViewById(R.id.task_date);
             holder.time = convertView.findViewById(R.id.task_time);
@@ -90,14 +90,14 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
         result.startAnimation(animation);
         lastPosition = position;
 
-        holder.isCompleted.setChecked(isCompleted);
+        holder.completed.setChecked(completed);
 
         holder.text.setText(taskText);
         holder.date.setText("Date: " + taskDate);
 
         holder.time.setText("Time: " + (taskHour < 10 ? "0" + taskHour : taskHour) + ":" + (taskMinute < 10 ? "0" + taskMinute : taskMinute));
 
-        holder.isCompleted.setOnClickListener(new View.OnClickListener() {
+        holder.completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.checkBoxChanged(position);

@@ -1,14 +1,14 @@
 package com.example.myproject.customclasses;
 
 public class Task {
-    private Boolean isCompleted;
+    private Boolean completed;
     private String text;
     private String date;
     private Long hour;
     private Long minute;
 
-    public Task(Boolean isCompleted, String text, String date, Long hour, Long minute) {
-        this.isCompleted = isCompleted;
+    public Task(Boolean completed, String text, String date, Long hour, Long minute) {
+        this.completed = completed;
         this.text = text;
         this.date = date;
         this.hour = hour;
@@ -16,11 +16,11 @@ public class Task {
     }
 
     public Boolean getCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public void setCompleted(Boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     public String getText() {

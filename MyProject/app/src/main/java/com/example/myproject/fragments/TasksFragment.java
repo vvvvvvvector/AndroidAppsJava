@@ -193,13 +193,13 @@ public class TasksFragment extends Fragment {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
                                 Map<String, Object> userTask = doc.getData();
 
-                                Boolean isCompleted = (Boolean) userTask.get("isCompleted");
+                                Boolean completed = (Boolean) userTask.get("completed");
                                 Long hour = (Long) userTask.get("hour");
                                 Long minute = (Long) userTask.get("minute");
                                 String text = (String) userTask.get("text");
                                 String date = (String) userTask.get("date");
 
-                                Task fetchedTask = new Task(isCompleted, text, date, hour, minute);
+                                Task fetchedTask = new Task(completed, text, date, hour, minute);
 
                                 fetchedTasks.add(fetchedTask);
                                 fetchedTasksIds.add(doc.getId());
