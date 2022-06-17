@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.TasksListAdapter;
@@ -129,10 +130,50 @@ public class TasksFragment extends Fragment {
         TextView tasksNumber = view.findViewById(R.id.tasks_number);
         tasksNumber.setText(tasks.size() + " tasks");
 
-        tasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tasksList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                Log.d("doc", "list click " + tasks.get(index).getText());
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int index, long l) {
+                AlertDialog.Builder communicate = new AlertDialog.Builder(getContext());
+                communicate.setMessage("Do you really want to delete this task?");
+
+                communicate.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseFirestore.getInstance()
+                                .collection("users/"
+                                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                        + "/tasks")
+                                .document(tasksIds.get(index))
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getActivity(), "task was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), "task wasn't deleted!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                        tasks.remove(index);
+                        tasksIds.remove(index);
+                        tasksNumber.setText(tasks.size() + " tasks");
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                communicate.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // closing alertdialog
+                    }
+                });
+
+                AlertDialog alertDialog = communicate.create();
+                alertDialog.show();
+
+                return true;
             }
         });
 

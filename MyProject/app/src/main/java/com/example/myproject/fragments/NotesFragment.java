@@ -198,6 +198,7 @@ public class NotesFragment extends Fragment {
                                 });
 
                         notes.remove(index);
+                        notesIds.remove(index);
                         notesNumber.setText(notes.size() + " notes");
                         adapter.notifyDataSetChanged();
                     }
