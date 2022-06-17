@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -27,10 +28,16 @@ import com.example.myproject.R;
 import com.example.myproject.adapters.TasksListAdapter;
 import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
+import com.example.myproject.customclasses.Note;
 import com.example.myproject.customclasses.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TasksFragment extends Fragment {
 
@@ -38,17 +45,41 @@ public class TasksFragment extends Fragment {
     OnDrawerListener onDrawerListener;
 
     ArrayList<Task> tasks;
+    ArrayList<String> tasksIds;
+
     TasksListAdapter adapter;
+
+    ListView tasksList;
+    TextView tasksNumber;
 
     public TasksFragment() {
         // Required empty public constructor
+    }
+
+    private interface FireBaseCallback {
+        void onTasksFetchCompleted(ArrayList<Task> fetchedTasks, ArrayList<String> fetchedTasksIds);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        tasks = new ArrayList<>();
+        tasksIds = new ArrayList<>();
         adapter = new TasksListAdapter(requireContext(), R.layout.tasks_list_single_task, tasks);
+
+        readUserTasksFromDatabase(new FireBaseCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTasksFetchCompleted(ArrayList<Task> fetchedTasks, ArrayList<String> fetchedTasksIds) {
+                tasks.addAll(fetchedTasks);
+                tasksIds.addAll(fetchedTasksIds);
+
+                tasksNumber.setText(tasks.size() + " tasks");
+
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,7 +95,11 @@ public class TasksFragment extends Fragment {
         LinearLayout drawerUserTasks = view.findViewById(R.id.drawer_user_tasks);
         LinearLayout drawerSignOut = view.findViewById(R.id.drawer_sign_out);
 
-        ListView tasksList = view.findViewById(R.id.tasks_list);
+        tasksList = view.findViewById(R.id.tasks_list);
+        tasksList.setAdapter(adapter);
+
+        tasksNumber = view.findViewById(R.id.tasks_number);
+        tasksNumber.setText(tasks.size() + " tasks");
 
         ImageView createNewTaskIcon = view.findViewById(R.id.add_new_task_icon);
 
@@ -144,45 +179,42 @@ public class TasksFragment extends Fragment {
         return view;
     }
 
+    public void readUserTasksFromDatabase(FireBaseCallback fireBaseCallback) {
+        ArrayList<Task> fetchedTasks = new ArrayList<>();
+        ArrayList<String> fetchedTasksIds = new ArrayList<>();
+
+        FirebaseFirestore.getInstance()
+                .collection("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/tasks")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                Map<String, Object> userTask = doc.getData();
+
+                                Boolean isCompleted = (Boolean) userTask.get("isCompleted");
+                                Long hour = (Long) userTask.get("hour");
+                                Long minute = (Long) userTask.get("minute");
+                                String text = (String) userTask.get("text");
+                                String date = (String) userTask.get("date");
+
+                                Task fetchedTask = new Task(isCompleted, text, date, hour, minute);
+
+                                fetchedTasks.add(fetchedTask);
+                                fetchedTasksIds.add(doc.getId());
+                            }
+                            fireBaseCallback.onTasksFetchCompleted(fetchedTasks, fetchedTasksIds);
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         Activity activity = (Activity) context;
-
-        tasks = new ArrayList<>();
-
-        Task task1 = new Task(false, "Text 1", "23/05/2022", 22L, 45L);
-        Task task2 = new Task(true, "Text 2", "22/04/2022", 5L, 3L);
-        Task task3 = new Task(false, "Text 3", "21/03/2022", 7L, 7L);
-        Task task4 = new Task(true, "Text 4", "20/02/2022", 19L, 42L);
-        Task task5 = new Task(false, "Text 5", "19/01/2022", 10L, 1L);
-        Task task6 = new Task(false, "Text 6", "18/05/2022", 22L, 45L);
-        Task task7 = new Task(true, "Text 7", "17/04/2022", 9L, 6L);
-        Task task8 = new Task(false, "Text 8", "16/03/2022", 20L, 43L);
-        Task task9 = new Task(true, "Text 9", "15/02/2022", 19L, 42L);
-        Task task10 = new Task(false, "Text 10", "14/01/2022", 18L, 41L);
-        Task task11 = new Task(false, "Text 11", "13/05/2022", 22L, 45L);
-        Task task12 = new Task(true, "Text 12", "12/04/2022", 21L, 44L);
-        Task task13 = new Task(false, "Text 13", "11/03/2022", 20L, 43L);
-        Task task14 = new Task(true, "Text 14", "10/02/2022", 19L, 42L);
-        Task task15 = new Task(false, "Text 15", "09/01/2022", 18L, 41L);
-
-        tasks.add(task1);
-        tasks.add(task2);
-        tasks.add(task3);
-        tasks.add(task4);
-        tasks.add(task5);
-        tasks.add(task6);
-        tasks.add(task7);
-        tasks.add(task8);
-        tasks.add(task9);
-        tasks.add(task10);
-        tasks.add(task11);
-        tasks.add(task12);
-        tasks.add(task13);
-        tasks.add(task14);
-        tasks.add(task15);
 
         try {
             onDrawerListener = (OnDrawerListener) activity;
