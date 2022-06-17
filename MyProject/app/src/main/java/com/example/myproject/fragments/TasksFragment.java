@@ -115,7 +115,14 @@ public class TasksFragment extends Fragment {
         adapter.setCallback(new TasksListAdapter.TasksAdapterCallback() {
             @Override
             public void checkBoxChanged(int position) {
-                Log.d("doc", "checkbox click " + tasks.get(position).getText());
+                tasks.get(position).setCompleted(!tasks.get(position).getCompleted());
+
+                FirebaseFirestore.getInstance()
+                        .collection("users/"
+                                + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                + "/tasks")
+                        .document(tasksIds.get(position))
+                        .set(tasks.get(position));
             }
         });
 
