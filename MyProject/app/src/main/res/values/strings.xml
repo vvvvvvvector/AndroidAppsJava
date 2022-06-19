@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Project</string>
+    <string name="app_name">My Daily Planner</string>
     <string name="home_fragment_title">WELCOME BACK!</string>
     <string name="user_email">Your email</string>
     <string name="user_password">Your password</string>

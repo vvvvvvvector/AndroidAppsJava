@@ -1,12 +1,24 @@
 package com.example.myproject.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -19,10 +31,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import com.example.myproject.MainActivity;
 import com.example.myproject.R;
 import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 import com.example.myproject.customclasses.Task;
+import com.example.myproject.receiver.AlarmReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -126,21 +140,17 @@ public class NewTaskFragment extends Fragment {
 
                 Task newTask = new Task(false, text, date, hour, minute);
 
-
                 // -------------------Alarm manager-------------------
                 Calendar calendar = Calendar.getInstance();
 
-                calendar.set(Calendar.MILLISECOND, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MINUTE, minute.intValue());
-                calendar.set(Calendar.HOUR, hour.intValue());
-                calendar.set(Calendar.DAY_OF_MONTH, forAlarmManagerDay);
-                calendar.set(Calendar.MONTH, forAlarmManagerMonth);
                 calendar.set(Calendar.YEAR, forAlarmManagerYear);
+                calendar.set(Calendar.MONTH, forAlarmManagerMonth - 1);
+                calendar.set(Calendar.DAY_OF_MONTH, forAlarmManagerDay);
+                calendar.set(Calendar.HOUR_OF_DAY, hour.intValue());
+                calendar.set(Calendar.MINUTE, minute.intValue());
+                calendar.set(Calendar.SECOND, 0);
 
-                Log.d("doc", String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-                Log.d("doc", String.valueOf(calendar.get(Calendar.MONTH)));
-                Log.d("doc", String.valueOf(calendar.get(Calendar.YEAR)));
+                setAlarm(calendar, text);
                 // -------------------Alarm manager-------------------
 
                 FirebaseFirestore.getInstance()
@@ -154,6 +164,17 @@ public class NewTaskFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setAlarm(Calendar calendar, String taskText) {
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Service.ALARM_SERVICE);
+        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+        intent.putExtra("taskText", taskText);
+
+        int id = (int) System.currentTimeMillis();
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     @Override
