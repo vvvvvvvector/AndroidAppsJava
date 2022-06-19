@@ -13,12 +13,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,7 +27,6 @@ import com.example.myproject.R;
 import com.example.myproject.adapters.TasksListAdapter;
 import com.example.myproject.callbackinterfaces.OnAddTaskListener;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
-import com.example.myproject.customclasses.Note;
 import com.example.myproject.customclasses.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -149,9 +146,9 @@ public class TasksFragment extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getActivity(), "task was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Task was successfully deleted!", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getActivity(), "task wasn't deleted!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Task wasn't deleted!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

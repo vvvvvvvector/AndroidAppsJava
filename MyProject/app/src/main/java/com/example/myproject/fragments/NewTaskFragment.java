@@ -35,6 +35,10 @@ public class NewTaskFragment extends Fragment {
 
     String date = "";
 
+    int forAlarmManagerDay;
+    int forAlarmManagerMonth;
+    int forAlarmManagerYear;
+
     public NewTaskFragment() {
         // Required empty public constructor
     }
@@ -50,6 +54,10 @@ public class NewTaskFragment extends Fragment {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         month++;
+
+        forAlarmManagerDay = day;
+        forAlarmManagerMonth = month;
+        forAlarmManagerYear = year;
 
         date = ((day < 10) ? "0" + day : day) + "/" + ((month < 10) ? "0" + month : month) + "/" + year;
     }
@@ -80,6 +88,11 @@ public class NewTaskFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month++;
+
+                        forAlarmManagerDay = day;
+                        forAlarmManagerMonth = month;
+                        forAlarmManagerYear = year;
+
                         date = ((day < 10) ? "0" + day : day) + "/" + ((month < 10) ? "0" + month : month) + "/" + year;
                         datePickerButton.setText(date);
                     }
@@ -112,6 +125,23 @@ public class NewTaskFragment extends Fragment {
                 Long minute = (long) timePicker.getMinute();
 
                 Task newTask = new Task(false, text, date, hour, minute);
+
+
+                // -------------------Alarm manager-------------------
+                Calendar calendar = Calendar.getInstance();
+
+                calendar.set(Calendar.MILLISECOND, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MINUTE, minute.intValue());
+                calendar.set(Calendar.HOUR, hour.intValue());
+                calendar.set(Calendar.DAY_OF_MONTH, forAlarmManagerDay);
+                calendar.set(Calendar.MONTH, forAlarmManagerMonth);
+                calendar.set(Calendar.YEAR, forAlarmManagerYear);
+
+                Log.d("doc", String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+                Log.d("doc", String.valueOf(calendar.get(Calendar.MONTH)));
+                Log.d("doc", String.valueOf(calendar.get(Calendar.YEAR)));
+                // -------------------Alarm manager-------------------
 
                 FirebaseFirestore.getInstance()
                         .collection("users/"

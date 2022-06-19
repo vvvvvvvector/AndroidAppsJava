@@ -19,7 +19,6 @@ import com.example.myproject.callbackinterfaces.OnAddNoteListener;
 import com.example.myproject.callbackinterfaces.OnBackButtonListener;
 import com.example.myproject.customclasses.Note;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NewNoteFragment extends Fragment {
@@ -80,7 +79,7 @@ public class NewNoteFragment extends Fragment {
             onAddNoteListener = (OnAddNoteListener) activity;
             onBackButtonListener = (OnBackButtonListener) activity;
         } catch (ClassCastException error) {
-            throw new ClassCastException(activity.toString() + " you must implement interface!");
+            throw new ClassCastException(activity + " you must implement interface!");
         }
     }
 }

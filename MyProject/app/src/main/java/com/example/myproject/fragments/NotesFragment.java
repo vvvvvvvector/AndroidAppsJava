@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.example.myproject.R;
 import com.example.myproject.adapters.NotesListAdapter;
-import com.example.myproject.adapters.TasksListAdapter;
 import com.example.myproject.callbackinterfaces.OnDrawerListener;
 import com.example.myproject.callbackinterfaces.OnViewNoteListener;
 import com.example.myproject.customclasses.Note;
@@ -190,9 +189,9 @@ public class NotesFragment extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getActivity(), "note was successfully deleted!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Note was successfully deleted!", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getActivity(), "note wasn't deleted!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Note wasn't deleted!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
