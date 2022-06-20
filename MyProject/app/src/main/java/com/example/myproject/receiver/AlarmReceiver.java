@@ -5,20 +5,15 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.myproject.MainActivity;
@@ -51,12 +46,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentTitle("Reminder")
                 .setContentText(taskText)
                 .setSound(alarmSound)
-                .setSmallIcon(R.drawable.ic_add_task)
+                .setSmallIcon(R.drawable.ic_checklist)
                 .setLargeIcon(icon)
                 .setContentIntent(pendingIntent)
                 .build();
 
+        int id = (int) System.currentTimeMillis();
         notificationManager.createNotificationChannel(notificationChannel);
-        notificationManager.notify(0, notification);
+        notificationManager.notify(id, notification);
     }
 }
